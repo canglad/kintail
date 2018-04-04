@@ -75,7 +75,6 @@ while flag:
     else:
       if my_debug:
         print('shard ' + shard['id'] + ' is closed, skipping...')
-      shard
       # mark this closed shard
       shard.pop('iterator', None)
 
