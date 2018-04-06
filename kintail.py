@@ -3,9 +3,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,10 +13,11 @@
 # limitations under the License.
 
 import argparse
+import time
+import json
 
 import boto3
 import boto3.session
-import time
 
 # use the command line parameter parser
 parser = argparse.ArgumentParser()
@@ -24,6 +25,7 @@ parser.add_argument("--profile", help="specify the profile")
 parser.add_argument("--region", help="specify the AWS region to use")
 parser.add_argument("--no-separator", help="don't add a separator line between log entries", action="store_true")
 parser.add_argument("--interval", help="specify the interval (seconds) between each poll, default 10 seconds", type=int, default=10)
+parser.add_argument("--json", help="if specified, prints out the record in parsed JSON format", action="store_true")
 parser.add_argument("--debug", help="print out debug info", action="store_true")
 parser.add_argument("stream-name", help="specify the name of the Kinesis stream")
 args = parser.parse_args()
@@ -33,9 +35,10 @@ my_region = args.region
 my_stream_name = getattr(args, "stream-name")
 my_interval = args.interval
 my_debug = args.debug
+my_jason = args.json
 
 if my_interval < 1:
-  print "argument interval must be no less than 1"
+  print ("argument interval must be no less than 1")
   exit(1)
 
 # create a boto3 session
@@ -69,9 +72,12 @@ while flag:
         if my_debug:
           print('Found records from shard ' + shard['id'] + ' ...')
         for rec in record_response['Records']:
-          print rec['Data']
+          if my_jason:
+            print(json.dumps(json.loads(rec['Data']), indent=4, sort_keys=True))
+          else:
+            print (rec['Data'])
           if not args.no_separator:
-            print '==========================================='
+            print ('===========================================')
     else:
       if my_debug:
         print('shard ' + shard['id'] + ' is closed, skipping...')
