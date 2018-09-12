@@ -24,7 +24,7 @@ If have not done so, install the AWS SDK Boto3 module by:
 `python kintail.py --profile <your_aws_profile_name> <your_kinesis_stream_name>`
 
 ## Run using a specific AWS profile with output formatted for JASON
-`python kintail.py --profile <your_aws_profile_name> --jason <your_kinesis_stream_name>`
+`python kintail.py --profile <your_aws_profile_name> --json <your_kinesis_stream_name>`
 
 ## Get help
 `python kintail.py -h`
