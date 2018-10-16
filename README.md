@@ -1,6 +1,6 @@
 # kintail
 
-A python script that continuously pulls records from an AWS Kinesis data stream and prints them on the screen. It was initially developed to help monitor AWS CloudTrail events for troubleshooting purpose. By using this tool, it can significantly make troubleshooting much more efficient as CloudTrail/CloudWatch events will be received and printed to the screen very quickly (usually within a minute), comparing to the usual CloudTrail logs delivery to S3 buckets which has up to 15 minutes delay. The results can also be piped through other handy Unix text processing tools for further filtering and analysis.
+A python script that continuously pulls records from an AWS Kinesis data stream and prints them on the screen.
 
 ## Usage
     python kintail.py
